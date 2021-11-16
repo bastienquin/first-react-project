@@ -6,9 +6,7 @@ class Incrementer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            counter: 0
-        };
+        this.state = {date: new Date()};
         this.timer = null;
     }
 
@@ -22,14 +20,15 @@ class Incrementer extends React.Component {
 
     increment() {
         this.setState((state, props) => {
-            return {counter: state.counter + 1};
+            return {date: new Date()};
         });
     }
 
     render() {
         return (
             <div>
-                <h1>{this.state.counter}</h1>
+                <h1>{this.state.date.toLocaleDateString()}</h1>
+                <h2>{this.state.date.toLocaleTimeString()}</h2>
             </div>
         );
     }
@@ -42,9 +41,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <p>Hello World !</p>
                 <Incrementer />
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a>
             </header>
         </div>
     );
