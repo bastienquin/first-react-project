@@ -50,6 +50,19 @@
     cursor: pointer;
 }
 
+.label {
+    font-size: 0.8em;
+    float: left;
+}
+
+.form-control {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #EEE;
+    margin-bottom: 10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

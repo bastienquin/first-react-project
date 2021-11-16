@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Incrementer extends React.Component {
@@ -10,6 +9,7 @@ class Incrementer extends React.Component {
             date: new Date(),
             timer: null
         };
+        this.toggleAction = this.toggleAction.bind(this);
     }
 
     componentDidMount() {
@@ -27,7 +27,7 @@ class Incrementer extends React.Component {
 
     play() {
         window.clearInterval(this.state.timer);
-        this.setState({timer: window.setInterval(this.increment.bind(this), 1000)});
+        this.setState({timer: window.setInterval(this.increment.bind(this), 500)});
     }
 
     pause() {
@@ -47,14 +47,62 @@ class Incrementer extends React.Component {
         return this.state.timer ? 'pause' : 'play';
     }
 
-
     render() {
         return (
             <div>
                 <h1>{this.state.date.toLocaleDateString()}</h1>
                 <h2>{this.state.date.toLocaleTimeString()}</h2>
-                <button onClick={this.toggleAction.bind(this)} className={"btn-" + this.classButton()}>{this.labelButton()}</button>
+                <button onClick={this.toggleAction} className={"btn-" + this.classButton()}>{this.labelButton()}</button>
             </div>
+        );
+    }
+
+}
+
+class Field extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <label className={"label"}>{this.props.children}</label>
+                <input type={this.props.type} name={this.props.name} value={this.props.value} onChange={this.props.onChange} className={"form-control"} />
+            </div>
+        );
+    }
+
+}
+
+class Form extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            email: '',
+            message: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
+
+    handleSubmit(event) {
+        alert("Mail send from " + this.state.name + " to " + this.state.email + " with message : " + this.state.message);
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <Field name="name" type="text" value={this.state.name} onChange={this.handleChange}>Nom</Field>
+                <Field name="email" type="email" value={this.state.email} onChange={this.handleChange}>Email</Field>
+                <Field name="message" type="text" value={this.state.message} onChange={this.handleChange}>Message</Field>
+                <br />
+                <button type={"submit"} className={"btn-pause"}>Envoyer</button>
+            </form>
         );
     }
 
@@ -65,8 +113,12 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
                 <Incrementer />
+
+                <br />
+
+                <Form />
+
             </header>
         </div>
     );
